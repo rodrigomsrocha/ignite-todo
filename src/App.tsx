@@ -1,6 +1,7 @@
 import styles from "./App.module.css";
 import { Header } from "./components/Header";
 import { Input } from "./components/Input";
+import { TodoList } from "./components/TodoList";
 
 export function App() {
   return (
@@ -8,6 +9,7 @@ export function App() {
       <Header />
       <main className={styles.wrapper}>
         <Input />
+        <TodoList />
       </main>
     </div>
   );
