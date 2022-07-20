@@ -2,9 +2,17 @@ import { Trash } from "phosphor-react";
 import clipboard from "../assets/clipboard.svg";
 import styles from "./TodoList.module.css";
 
-const todos = ["1", "2", "3"];
+interface Todo {
+  id: string;
+  status: "todo" | "complete";
+  taskContent: string;
+}
 
-export function TodoList() {
+interface TodoListProps {
+  todos: Todo[];
+}
+
+export function TodoList({ todos }: TodoListProps) {
   return (
     <div className={styles.todosContainer}>
       <header>
@@ -24,14 +32,10 @@ export function TodoList() {
       ) : (
         <main className={styles.todos}>
           {todos.map((todo) => (
-            <label htmlFor={todo}>
-              <input type="checkbox" id={todo} />
+            <label key={todo.id} htmlFor={todo.id}>
+              <input type="checkbox" id={todo.id} />
               <span className={styles.checkmark} />
-              <span className={styles.todoContent}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Consequatur officiis molestias voluptatibus dolores provident
-                sunt perferendis
-              </span>
+              <span className={styles.todoContent}>{todo.taskContent}</span>
 
               <button>
                 <Trash size={24} />

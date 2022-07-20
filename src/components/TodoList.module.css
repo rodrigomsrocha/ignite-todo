@@ -131,6 +131,7 @@
   padding: 6px;
   border-radius: 4px;
   transition: 0.2s;
+  margin-left: auto;
 }
 
 .todos label button:hover {
