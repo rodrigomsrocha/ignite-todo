@@ -1,5 +1,5 @@
-import { Trash } from "phosphor-react";
 import clipboard from "../assets/clipboard.svg";
+import { Todo } from "./Todo";
 import styles from "./TodoList.module.css";
 
 interface Todo {
@@ -10,9 +10,10 @@ interface Todo {
 
 interface TodoListProps {
   todos: Todo[];
+  getTodos: () => void;
 }
 
-export function TodoList({ todos }: TodoListProps) {
+export function TodoList({ todos, getTodos }: TodoListProps) {
   return (
     <div className={styles.todosContainer}>
       <header>
@@ -32,15 +33,12 @@ export function TodoList({ todos }: TodoListProps) {
       ) : (
         <main className={styles.todos}>
           {todos.map((todo) => (
-            <label key={todo.id} htmlFor={todo.id}>
-              <input type="checkbox" id={todo.id} />
-              <span className={styles.checkmark} />
-              <span className={styles.todoContent}>{todo.taskContent}</span>
-
-              <button>
-                <Trash size={24} />
-              </button>
-            </label>
+            <Todo
+              key={todo.id}
+              getTodos={getTodos}
+              id={todo.id}
+              taskContent={todo.taskContent}
+            />
           ))}
         </main>
       )}

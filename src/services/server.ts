@@ -53,6 +53,13 @@ export function makeServer({ environment = "test" } = {}) {
         };
         return schema.create("todo", taskToBeCreated);
       });
+      this.delete("/:id", (schema, req) => {
+        const { id } = req.params;
+        const taskToBeDeleted = schema.find("todo", id);
+
+        if (taskToBeDeleted) taskToBeDeleted.destroy();
+        return schema.all("todo");
+      });
     },
   });
   return server;
