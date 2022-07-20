@@ -60,6 +60,18 @@ export function makeServer({ environment = "test" } = {}) {
         if (taskToBeDeleted) taskToBeDeleted.destroy();
         return schema.all("todo");
       });
+      this.patch("/:id", (schema, req) => {
+        const { id } = req.params;
+        const { status } = JSON.parse(req.requestBody);
+        const taskToBeUpdated = schema.find("todo", id);
+
+        if (taskToBeUpdated) {
+          taskToBeUpdated.update({
+            status,
+          });
+        }
+        return schema.all("todo");
+      });
     },
   });
   return server;

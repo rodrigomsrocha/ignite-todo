@@ -1,21 +1,17 @@
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
-import { api } from "../services/api";
 import styles from "./Input.module.css";
 
 interface InputProps {
-  getTodos: () => void;
+  onCreateTask: (taskContent: string) => void;
 }
 
-export function Input({ getTodos }: InputProps) {
+export function Input({ onCreateTask }: InputProps) {
   const [taskContent, setTaskContent] = useState("");
 
   function handleCreateTask(e: FormEvent) {
     e.preventDefault();
-    api.post("/", {
-      taskContent,
-    });
-    getTodos();
+    onCreateTask(taskContent);
   }
 
   function handleTaskTextChange(e: ChangeEvent<HTMLInputElement>) {

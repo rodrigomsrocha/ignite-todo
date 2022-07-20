@@ -11,9 +11,18 @@ interface Todo {
 interface TodoListProps {
   todos: Todo[];
   getTodos: () => void;
+  onUpdateTask: (id: string) => void;
+  onDeleteTask: (id: string) => void;
 }
 
-export function TodoList({ todos, getTodos }: TodoListProps) {
+export function TodoList({ todos, onDeleteTask, onUpdateTask }: TodoListProps) {
+  const finishedTodos = todos.reduce((acc, task) => {
+    if (task.status === "complete") {
+      return acc + 1;
+    }
+    return acc;
+  }, 0);
+
   return (
     <div className={styles.todosContainer}>
       <header>
@@ -21,7 +30,10 @@ export function TodoList({ todos, getTodos }: TodoListProps) {
           Tarefas criadas<span>{todos.length}</span>
         </strong>
         <strong>
-          Concluídas<span>0</span>
+          Concluídas
+          <span>
+            {finishedTodos} de {todos.length}
+          </span>
         </strong>
       </header>
       {todos.length === 0 ? (
@@ -34,10 +46,12 @@ export function TodoList({ todos, getTodos }: TodoListProps) {
         <main className={styles.todos}>
           {todos.map((todo) => (
             <Todo
+              onUpdateTask={onUpdateTask}
+              onDeleteTask={onDeleteTask}
               key={todo.id}
-              getTodos={getTodos}
               id={todo.id}
               taskContent={todo.taskContent}
+              status={todo.status}
             />
           ))}
         </main>
